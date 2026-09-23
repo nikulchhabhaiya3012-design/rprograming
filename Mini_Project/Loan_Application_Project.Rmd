@@ -1,0 +1,85 @@
+---
+title: "Loan Application Analysis Project"
+author: "Nikul Chhabhaiya - 2505101270035"
+division: "C"
+date: "2026-09-17"
+output: html_document
+---
+
+## Introduction
+
+This project analyzes the Loan Application database using R.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+```
+
+## Import Dataset
+
+```{r}
+loan <- read.csv("Data.csv")
+head(loan)
+```
+
+## Dataset Summary
+
+```{r}
+summary(loan)
+str(loan)
+```
+
+## Loan Status Count
+
+```{r}
+table(loan$Status..Approved.Rejected.Pending.)
+```
+
+## Loan Type Chart
+
+```{r}
+ggplot(loan, aes(x = Loan.Type)) +
+  geom_bar(fill = "steelblue") +
+  labs(title = "Loan Types", x = "Loan Type", y = "Count")
+```
+
+## Loan Amount by Loan Type
+
+```{r}
+ggplot(loan, aes(x = Loan.Type, y = Loan.Amount)) +
+  geom_boxplot(fill = "lightgreen") +
+  labs(title = "Loan Amount by Loan Type")
+```
+
+## City-wise Applications
+
+```{r}
+ggplot(loan, aes(x = City...Branch.Location)) +
+  geom_bar(fill = "orange") +
+  labs(title = "Applications by City", x = "City", y = "Count") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+## Loan Status Pie Chart
+
+```{r}
+status <- table(loan$Status..Approved.Rejected.Pending.)
+
+pie(status,
+    col = rainbow(length(status)),
+    main = "Loan Status Distribution")
+```
+
+## Interest Rate Distribution
+
+```{r}
+ggplot(loan, aes(x = Interest.Rate....)) +
+  geom_histogram(bins = 10, fill = "red", color = "black") +
+  labs(title = "Interest Rate Distribution",
+       x = "Interest Rate (%)",
+       y = "Count")
+```
+
+## Conclusion
+
+The project imports the dataset successfully and analyzes loan applications by status, loan type, loan amount, and city.
